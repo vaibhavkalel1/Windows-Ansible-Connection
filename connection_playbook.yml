@@ -1,6 +1,6 @@
 ---
 - name: Configure WinRM on Windows Server
-  hosts: windows_host
+  hosts: windows
   tasks:
     - name: Open PowerShell and run commands to configure WinRM
       ansible.windows.win_shell: |
@@ -11,14 +11,13 @@
           Set-Item -Path 'WSMan:\localhost\Service\AllowUnencrypted' -Value $true;
           Set-Item -Path 'WSMan:\localhost\Service\Auth\Basic' -Value $true;
           Set-Item -Path 'WSMan:\localhost\Service\Auth\CredSSP' -Value $true;
-          Set-Item WSMan:\localhost\Client\TrustedHosts -Value "13.234.34.238" -Force;
+          Set-Item WSMan:\localhost\Client\TrustedHosts -Value "35.154.171.163" -Force;
           New-ItemProperty -Name LocalAccountTokenFilterPolicy -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -PropertyType DWord -Value 1 -Force;
           Set-ExecutionPolicy Unrestricted -Force;
           Restart-Service WinRM;
           winrm enumerate winrm/config/Listener;
         "@ -NoNewWindow -Wait
       register: winrm_config_output
-
-    - name: Display WinRM configuration output
-      debug:
-        var: winrm_config_output.stdout_lines
+      retries: 3
+      delay: 10
+      until: winrm_config_output is succeeded
