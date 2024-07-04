@@ -9,6 +9,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
+                // Checkout the Git repository where your Ansible playbook and inventory are stored
                 git 'https://github.com/vaibhavkalel1/Windows-Ansible-Connection.git'
             }
         }
@@ -20,7 +21,7 @@ pipeline {
                     ansiblePlaybook(
                         playbook: 'connection_ansible.yml',
                         inventory: ANSIBLE_HOSTS,
-                        // credentialsId: CREDENTIAL_ID,  // Uncomment if using credentials
+                        credentialsId: CREDENTIAL_ID,  // Use Jenkins credential ID for Ansible
                         extraVars: [
                             // Define any extra variables needed
                         ]
@@ -40,6 +41,7 @@ pipeline {
     post {
         always {
             // Clean up steps if necessary
+            echo "Pipeline execution completed"  // Example of a cleanup step (can be replaced with actual cleanup tasks)
         }
     }
 }
