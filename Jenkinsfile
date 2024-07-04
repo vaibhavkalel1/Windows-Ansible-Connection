@@ -19,7 +19,7 @@ pipeline {
                 script {
                     // Run Ansible playbook to configure WinRM
                     ansiblePlaybook(
-                        playbook: 'connection_ansible.yml',
+                        playbook: 'connection_playbook.yml',
                         inventory: ANSIBLE_HOSTS,
                         credentialsId: CREDENTIAL_ID,  // Use Jenkins credential ID for Ansible
                         extraVars: [
