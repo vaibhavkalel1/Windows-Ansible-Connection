@@ -22,9 +22,7 @@ pipeline {
                         playbook: 'connection_playbook.yml',
                         inventory: ANSIBLE_HOSTS,
                         credentialsId: CREDENTIAL_ID,  // Use Jenkins credential ID for Ansible
-                        extraVars: [
-                            // Define any extra variables needed
-                        ]
+                        extraVars: [:]  // Ensure extraVars is an empty map if no extra variables are needed
                     )
                 }
             }
