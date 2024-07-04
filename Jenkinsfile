@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         ANSIBLE_HOSTS = "hosts.ini"  // Path to your Ansible hosts file
-        // CREDENTIAL_ID = 'your_ansible_cred_id'  // Jenkins credential ID for Ansible
+        CREDENTIAL_ID = 'connectioncred'  // Jenkins credential ID for Ansible
     }
 
     stages {
